@@ -1,0 +1,5 @@
+venv/*
+.git/*
+.circleci
+.coveragerc
+.env

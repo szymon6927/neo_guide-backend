@@ -1,0 +1,143 @@
+version: 2.1
+
+default_python_image: &default_python_image
+  image: circleci/python:3.8
+
+default_resource_class: &default_resource_class
+  resource_class: xlarge
+
+attach_workspace: &attach_workspace
+  attach_workspace:
+    at: ~/workspace
+
+repo_working_dir: &repo_working_dir
+  working_directory: ~/workspace/repo
+
+executors:
+  python:
+    <<: *default_resource_class
+    <<: *repo_working_dir
+    docker:
+      - <<: *default_python_image
+
+  python_with_services:
+    <<: *default_resource_class
+    <<: *repo_working_dir
+    docker:
+      - <<: *default_python_image
+        environment:
+          SECRET_KEY: test
+          DEBUG: True
+          DATABASE_URL: postgres://root:circleci_test@localhost/circle_test
+      - image: circleci/postgres:11.1
+        environment:
+          POSTGRES_PASSWORD: circleci_test
+          POSTGRES_USER: root
+          POSTGRES_DB: circle_test
+
+jobs:
+  checkout_code:
+    executor: python
+    steps:
+      - checkout
+      - persist_to_workspace:
+          root: ~/workspace
+          paths:
+            - repo
+
+  install_requirements:
+    executor: python
+    steps:
+      - <<: *attach_workspace
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "requirements/dev.txt" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+      - run:
+          name: install dependencies
+          command: |
+            python3 -m venv ~/workspace/venv
+            . ~/workspace/venv/bin/activate
+            pip install -r requirements/dev.txt
+      - save_cache:
+          paths:
+            - ~/workspace/venv
+          key: v1-dependencies-{{ checksum "requirements/dev.txt" }}
+
+  audit_pip_deps:
+    executor: python
+    steps:
+      - <<: *attach_workspace
+      - run:
+          name: run safety
+          command: |
+            . ~/workspace/venv/bin/activate
+            safety check
+
+  run_django_system_checks:
+    executor: python_with_services
+    steps:
+      - <<: *attach_workspace
+      - run:
+          name: dry run makemigrations
+          command: |
+            . ~/workspace/venv/bin/activate
+            python manage.py makemigrations --check --dry-run
+
+  audit_security_of_code:
+    executor: python
+    steps:
+      - <<: *attach_workspace
+      - run:
+          name: run bandit
+          command: |
+            . ~/workspace/venv/bin/activate
+            bandit -r .
+
+  run_tests:
+    executor: python_with_services
+    steps:
+      - <<: *attach_workspace
+      - run:
+          name: run tests
+          command: |
+            . ~/workspace/venv/bin/activate
+            pytest neo_guide
+      - persist_to_workspace:
+          root: ~/workspace
+          paths:
+            - repo
+
+workflows:
+  version: 2.1
+  build-and-deploy:
+    jobs:
+      - checkout_code
+      - install_requirements:
+          requires:
+            - checkout_code
+      - audit_pip_deps:
+          requires:
+            - install_requirements
+      - run_django_system_checks:
+          requires:
+            - install_requirements
+      - run_tests:
+          requires:
+            - install_requirements
+            - setup_code_climate_test_reporter
+      - audit_security_of_code:
+          requires:
+            - install_requirements
+      - push_and_deploy_to_staging:
+          requires:
+            - install_requirements
+            - audit_pip_deps
+            - run_django_system_checks
+            - run_tests
+            - audit_security_of_code
+          filters:
+            branches:
+              only:
+                - master

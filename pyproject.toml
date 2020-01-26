@@ -1,0 +1,5 @@
+[tool.black]
+line-length = 120
+target-version = ['py38']
+exclude = '/(\.git|\.pytest_cache|docker|migrations)/'
+skip-string-normalization = 1

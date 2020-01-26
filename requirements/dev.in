@@ -1,0 +1,15 @@
+-r requirements.in
+
+bandit
+black
+coreapi
+django-debug-toolbar
+factory-boy
+ipython
+pre-commit
+pytest
+pytest-cov
+pytest-django
+pytest-faker
+pytest-mock
+safety
