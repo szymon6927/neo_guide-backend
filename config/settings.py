@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'django_celery_beat',
+    # 'django_celery_beat',
     'rest_framework',
     'drf_yasg',
     'corsheaders',
@@ -241,8 +241,8 @@ else:
 
 # Celery
 
-CELERY_BROKER_URL = env('CELERY_BROKER_URL', default='redis://redis:6379/1')
-CELERY_TASK_DEFAULT_QUEUE = env('CELERY_TASK_DEFAULT_QUEUE', default='default_queue')
-CELERY_BROKER_TRANSPORT_OPTIONS = {'region': env('AWS_REGION', default='eu-central-1')}
-CELERY_IGNORE_RESULT = True
-CELERY_RESULT_PERSISTENT = False
+# CELERY_BROKER_URL = env('CELERY_BROKER_URL', default='redis://redis:6379/1')
+# CELERY_TASK_DEFAULT_QUEUE = env('CELERY_TASK_DEFAULT_QUEUE', default='default_queue')
+# CELERY_BROKER_TRANSPORT_OPTIONS = {'region': env('AWS_REGION', default='eu-central-1')}
+# CELERY_IGNORE_RESULT = True
+# CELERY_RESULT_PERSISTENT = False
