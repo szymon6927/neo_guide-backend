@@ -44,15 +44,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     # 'django_celery_beat',
     'rest_framework',
     'drf_yasg',
     'corsheaders',
     'storages',
-
-    'neo_guide.users.apps.UsersConfig',
-    'neo_guide.core.apps.CoreConfig',
+    'django_filters',
+    'neo_guide.users',
+    'neo_guide.core',
+    'neo_guide.psalms',
 ]
 
 MIDDLEWARE = [
@@ -175,8 +175,12 @@ if not CORS_ORIGIN_ALLOW_ALL:
 # Django Rest Framework
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': 'rest_framework.permissions.IsAuthenticated',
+    'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.IsAuthenticated'],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+        'rest_framework.filters.OrderingFilter',
+    ),
     'PAGE_SIZE': 10,
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
 }
@@ -196,9 +200,7 @@ if 'AWS_STORAGE_BUCKET_NAME' in env:
     AWS_S3_CUSTOM_DOMAIN = env(
         'CUSTOM_S3_BUCKET_REGIONAL_DOMAIN', default=f'{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com'
     )
-    AWS_S3_OBJECT_PARAMETERS = {
-        'CacheControl': 'max-age=86400',
-    }
+    AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
     AWS_DEFAULT_ACL = 'public-read'
 
     STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
