@@ -21,4 +21,4 @@ def validate_image_file_size(value):
 
 page_number_validator = [MinValueValidator(1), MaxValueValidator(500)]
 audio_validator = [FileExtensionValidator(['mp3', 'wav', 'wma', 'flac']), validate_audio_file_size]
-image_validator = [validate_image_file_size]
+image_validator = [FileExtensionValidator(['jpg', 'jpeg', 'png']), validate_image_file_size]
