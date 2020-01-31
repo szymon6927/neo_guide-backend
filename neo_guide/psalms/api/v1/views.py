@@ -1,9 +1,13 @@
-from django.db.models import Q
+from django.db.models import OuterRef
+from django.db.models import Prefetch
+from django.db.models import Subquery
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from neo_guide.psalms.api.v1.serializers import PsalmSerializer
 from neo_guide.psalms.models import Psalm
+from neo_guide.psalms.models import PsalmAudio
+from neo_guide.psalms.models import PsalmImage
 
 
 class PsalmViewSet(viewsets.ReadOnlyModelViewSet):
@@ -13,12 +17,15 @@ class PsalmViewSet(viewsets.ReadOnlyModelViewSet):
     ordering_fields = ('name', 'card_number')
     serializer_class = PsalmSerializer
     queryset = (
-        Psalm.objects.filter(
-            (
-                Q(active=True)
-                & (Q(psalm_audio__active=True) | Q(psalm_image__default=True) | Q(psalm_audio__active=True))
+        Psalm.objects.prefetch_related(
+            Prefetch('psalm_audio', queryset=PsalmAudio.objects.filter(active=True)),
+            Prefetch('psalm_image', queryset=PsalmImage.objects.filter(active=True)),
+        )
+        .annotate(
+            default_image=Subquery(
+                PsalmImage.objects.filter(active=True, default=True, psalm=OuterRef('id')).values('image')
             )
         )
+        .filter(active=True)
         .order_by('page_number')
-        .distinct()
     )
