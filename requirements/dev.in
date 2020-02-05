@@ -13,3 +13,4 @@ pytest-django
 pytest-faker
 pytest-mock
 safety
+Pillow
