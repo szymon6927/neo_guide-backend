@@ -13,8 +13,8 @@ from neo_guide.psalms.models import PsalmImage
 class PsalmViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
     filterset_fields = ('card_color',)
-    search_fields = ('^name',)
-    ordering_fields = ('name', 'card_number')
+    search_fields = ('name', 'page_number')
+    ordering_fields = ('name', 'page_number')
     serializer_class = PsalmSerializer
     queryset = (
         Psalm.objects.prefetch_related(
