@@ -1,23 +1,27 @@
 version: "3.7"
 
-x-env-var: &env_var
-  environment:
-    SECRET_KEY: "$SECRET_KEY"
-    DEBUG: "true"
-    ADMIN_URL: 'admin/'
-    ALLOWED_HOSTS: "*"
-    CORS_ORIGIN_WHITELIST: "$CORS_ORIGIN_WHITELIST"
-    DATABASE_URL: "$DATABASE_URL"
-    AWS_STORAGE_BUCKET_NAME: "$CUSTOM_S3_BUCKET_NAME"
-    # ROLLBAR_ACCESS_TOKEN: "$ROLLBAR_ACCESS_TOKEN"
-    # ROLLBAR_ENVIRONMENT: "staging"
-    # CELERY_BROKER_URL: "sqs://"
-    # CELERY_TASK_DEFAULT_QUEUE: "calluna-sqs-neo_guide-staging"
-    # CACHE_LOCATION: "$REDIS_URL"
+#x-env-var: &env_var
+#  environment:
+#    SECRET_KEY: "$SECRET_KEY"
+#    DEBUG: "true"
+#    ADMIN_URL: 'admin/'
+#    ALLOWED_HOSTS: "*"
+#    CORS_ORIGIN_WHITELIST: "$CORS_ORIGIN_WHITELIST"
+#    DATABASE_URL: "$DATABASE_URL"
+#    AWS_STORAGE_BUCKET_NAME: "$CUSTOM_S3_BUCKET_NAME"
+#    # ROLLBAR_ACCESS_TOKEN: "$ROLLBAR_ACCESS_TOKEN"
+#    # ROLLBAR_ENVIRONMENT: "staging"
+#    # CELERY_BROKER_URL: "sqs://"
+#    # CELERY_TASK_DEFAULT_QUEUE: "calluna-sqs-neo_guide-staging"
+#    # CACHE_LOCATION: "$REDIS_URL"
+x-env_file: &env_file
+  env_file:
+    - ./.env
 
 x-base:
   &base
-  <<: *env_var
+#  <<: *env_var
+  <<: *env_file
   build: .
 
 services:
@@ -26,7 +30,7 @@ services:
     container_name: neo_guide-backend
     restart: always
     ports:
-      - "3000:3000"
+      - "80:3000"
     command: >
       bash -c "python wait_for_postgres.py &&
                python manage.py collectstatic --noinput &&
@@ -39,12 +43,12 @@ services:
       - 8080:8080
     environment:
       API_URL: "http://0.0.0.0:8000/swagger.json"
-  celery_worker:
-    <<: *base
-    container_name: neo_guide-celery-worker
-    command: celery worker -A config.celery -l info
-
-  celery_beat:
-    <<: *base
-    container_name: neo_guide-celery-beat
-    command: celery beat -A config.celery -l info
+#  celery_worker:
+#    <<: *base
+#    container_name: neo_guide-celery-worker
+#    command: celery worker -A config.celery -l info
+#
+#  celery_beat:
+#    <<: *base
+#    container_name: neo_guide-celery-beat
+#    command: celery beat -A config.celery -l info
