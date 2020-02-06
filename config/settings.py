@@ -202,8 +202,8 @@ if 'AWS_STORAGE_BUCKET_NAME' in env:
         'CUSTOM_S3_BUCKET_REGIONAL_DOMAIN', default=f'{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com'
     )
     AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
-    # AWS_DEFAULT_ACL = 'public-read'
-    AWS_DEFAULT_ACL = None
+    AWS_DEFAULT_ACL = 'public-read'
+    # AWS_DEFAULT_ACL = None
 
     STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
     STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'

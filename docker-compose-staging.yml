@@ -1,27 +1,30 @@
 version: "3.7"
 
-#x-env-var: &env_var
-#  environment:
-#    SECRET_KEY: "$SECRET_KEY"
-#    DEBUG: "true"
-#    ADMIN_URL: 'admin/'
-#    ALLOWED_HOSTS: "*"
-#    CORS_ORIGIN_WHITELIST: "$CORS_ORIGIN_WHITELIST"
-#    DATABASE_URL: "$DATABASE_URL"
-#    AWS_STORAGE_BUCKET_NAME: "$CUSTOM_S3_BUCKET_NAME"
-#    # ROLLBAR_ACCESS_TOKEN: "$ROLLBAR_ACCESS_TOKEN"
-#    # ROLLBAR_ENVIRONMENT: "staging"
-#    # CELERY_BROKER_URL: "sqs://"
-#    # CELERY_TASK_DEFAULT_QUEUE: "calluna-sqs-neo_guide-staging"
-#    # CACHE_LOCATION: "$REDIS_URL"
-x-env_file: &env_file
-  env_file:
-    - ./.env
+x-env-var: &env_var
+  environment:
+    SECRET_KEY: "$SECRET_KEY"
+    DEBUG: "true"
+    ADMIN_URL: 'admin/'
+    ALLOWED_HOSTS: "*"
+    CORS_ORIGIN_WHITELIST: "$CORS_ORIGIN_WHITELIST"
+    DATABASE_URL: "$DATABASE_URL"
+    AWS_STORAGE_BUCKET_NAME: "$AWS_STORAGE_BUCKET_NAME"
+    AWS_ACCESS_KEY_ID: "$AWS_ACCESS_KEY_ID"
+    AWS_SECRET_ACCESS_KEY: "$AWS_SECRET_ACCESS_KEY"
+    # ROLLBAR_ACCESS_TOKEN: "$ROLLBAR_ACCESS_TOKEN"
+    # ROLLBAR_ENVIRONMENT: "staging"
+    # CELERY_BROKER_URL: "sqs://"
+    # CELERY_TASK_DEFAULT_QUEUE: "calluna-sqs-neo_guide-staging"
+    # CACHE_LOCATION: "$REDIS_URL"
+
+#x-env_file: &env_file
+#  env_file:
+#    - ./.env
 
 x-base:
   &base
 #  <<: *env_var
-  <<: *env_file
+  <<: *env_var
   build: .
 
 services:
