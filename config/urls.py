@@ -3,11 +3,13 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include
 from django.urls import path
+from django.urls import reverse_lazy
+from django.views.generic.base import RedirectView
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
 
-from neo_guide.core.views import health
+from neo_guide.core.views import HealthCheckView
 
 schema_view = get_schema_view(
     openapi.Info(title='neo_guide API', default_version='v1'),
@@ -21,7 +23,8 @@ api_urlpatterns = [path('api/', include('neo_guide.psalms.api.urls'))]
 urlpatterns = [
     path('docs/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    path('health', health),
+    path('health', HealthCheckView.as_view(), name='health-check'),
+    path('', RedirectView.as_view(url=reverse_lazy('admin:index')), name='homepage'),
     path(settings.ADMIN_URL, admin.site.urls),
     # api urls
     *api_urlpatterns,
