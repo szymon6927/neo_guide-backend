@@ -213,6 +213,46 @@ jobs:
             - repo
             - venv
 
+  audit_pip_deps:
+    executor: python
+    steps:
+      - <<: *attach_workspace
+      - run:
+          name: run safety
+          command: |
+            . ~/workspace/venv/bin/activate
+            safety check
+
+  run_django_system_checks:
+    executor: python_with_services
+    steps:
+      - <<: *attach_workspace
+      - run:
+          name: dry run makemigrations
+          command: |
+            . ~/workspace/venv/bin/activate
+            python manage.py makemigrations --check --dry-run
+
+  audit_security_of_code:
+    executor: python
+    steps:
+      - <<: *attach_workspace
+      - run:
+          name: run bandit
+          command: |
+            . ~/workspace/venv/bin/activate
+            bandit -r .
+
+  check_code_style:
+    executor: python
+    steps:
+      - <<: *attach_workspace
+      - run:
+          name: run black
+          command: |
+            . ~/workspace/venv/bin/activate
+            black --check .
+
   run_tests:
     executor: python_with_services
     steps:
@@ -222,6 +262,7 @@ jobs:
           command: |
             . ~/workspace/venv/bin/activate
             pytest neo_guide
+
   push_and_deploy_to_staging:
     <<: *repo_working_dir
     executor: aws-cli/default
@@ -250,13 +291,29 @@ workflows:
       - install_requirements:
           requires:
             - checkout_code
+      - audit_pip_deps:
+          requires:
+            - install_requirements
+      - check_code_style:
+          requires:
+            - install_requirements
+      - run_django_system_checks:
+          requires:
+            - install_requirements
       - run_tests:
+          requires:
+            - install_requirements
+      - audit_security_of_code:
           requires:
             - install_requirements
       - push_and_deploy_to_staging:
           requires:
             - install_requirements
+            - audit_pip_deps
+            - check_code_style
+            - run_django_system_checks
             - run_tests
+            - audit_security_of_code
 #          filters:
 #            branches:
 #              only:
