@@ -1,7 +1,7 @@
 -r requirements.in
 
 bandit
-black
+black==19.3b0
 coreapi
 django-debug-toolbar
 factory-boy

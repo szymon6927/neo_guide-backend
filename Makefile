@@ -1,7 +1,7 @@
 update-deps:
 	pip install pip-tools
-	pip-compile --generate-hashes requirements/dev.in --output-file requirements/dev.txt
-	pip-compile --generate-hashes requirements/requirements.in --output-file requirements/requirements.txt
+	pip-compile --allow-unsafe --generate-hashes requirements/dev.in --output-file requirements/dev.txt
+	pip-compile --allow-unsafe --generate-hashes requirements/requirements.in --output-file requirements/requirements.txt
 
 format:
 	black neo_guide
