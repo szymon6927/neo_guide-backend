@@ -20,6 +20,12 @@ schema_view = get_schema_view(
 # api routers
 api_urlpatterns = [path('api/', include('neo_guide.psalms.api.urls'))]
 
+
+# Django Admin
+admin.site.site_header = "Neo Guide"
+admin.site.site_title = "Neo Guide"
+admin.site.index_title = "Welcome to Neo Guide admin panel"
+
 urlpatterns = [
     path('docs/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
