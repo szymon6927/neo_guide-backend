@@ -204,42 +204,11 @@ if 'AWS_STORAGE_BUCKET_NAME' in env:
     AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
     AWS_DEFAULT_ACL = 'public-read'
 
-    STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+    STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/'
     STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
     DEFAULT_FILE_STORAGE = 'core.storage_backends.MediaStorage'
-    MEDIA_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION_MEDIA)
-
-
-# Rollbar settings
-
-ROLLBAR_ENVIRONMENT_PRODUCTION = 'production'
-ROLLBAR_ENVIRONMENT_STAGING = 'staging'
-ROLLBAR_ENVIRONMENT_OTHER = 'other'
-ROLLBAR_ENVIRONMENT_OPTIONS = (ROLLBAR_ENVIRONMENT_PRODUCTION, ROLLBAR_ENVIRONMENT_STAGING, ROLLBAR_ENVIRONMENT_OTHER)
-
-# Rollbar environment defaults to ROLLBAR_ENVIRONMENT_OTHER,
-# which means that it will not report any errors, ex. during local development
-rollbar_environment_value = env('ROLLBAR_ENVIRONMENT', default=ROLLBAR_ENVIRONMENT_OTHER)
-if rollbar_environment_value not in ROLLBAR_ENVIRONMENT_OPTIONS:
-    raise ValueError(
-        f'Invalid value of ROLLBAR_ENVIRONMENT - "{rollbar_environment_value}". '
-        f'Available values are: {", ".join(ROLLBAR_ENVIRONMENT_OPTIONS)}'
-    )
-elif rollbar_environment_value != ROLLBAR_ENVIRONMENT_OTHER:
-    rollbar_access_token = env('ROLLBAR_ACCESS_TOKEN')
-    if rollbar_access_token == '':
-        raise ValueError('Rollbar access token cannot be an empty string')
-    ROLLBAR = {
-        'access_token': rollbar_access_token,
-        'environment': rollbar_environment_value,
-        'branch': env('ROLLBAR_BRANCH', default='master'),
-        'root': BASE_DIR,
-    }
-else:
-    logger.warning(
-        f'Skipping Rollbar configuration, because ROLLBAR_ENVIRONMENT was set to "{rollbar_environment_value}"'
-    )
+    MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION_MEDIA}/'
 
 
 # Celery
