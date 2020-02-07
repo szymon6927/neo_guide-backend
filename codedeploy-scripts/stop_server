@@ -31,15 +31,9 @@ set -x
 # since it's triggered before DownloadBundle
 # See: appspec.yml for more details.
 
-# Replace "your_instance_name" with name of your instance
-#INSTANCE_NAME="jira-connector"
 . /home/ec2-user/export_envs
 
 DIR=$(cat /opt/codedeploy-agent/deployment-root/deployment-instructions/${DEPLOYMENT_GROUP_ID}_most_recent_install)
 cd $DIR/deployment-archive
 COMPOSE="docker-compose -p neo-guide -f docker-compose-staging.yml"
 ${COMPOSE} down | true
-
-# NOTE:
-#   ${COMPOSE} down | true
-#   should always return an RC zero in order to avoid the ApplicationStop Hook failures; it's fairly safe and very simple.
