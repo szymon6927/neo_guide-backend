@@ -243,16 +243,6 @@ jobs:
             . ~/workspace/venv/bin/activate
             bandit -r .
 
-  check_code_style:
-    executor: python
-    steps:
-      - <<: *attach_workspace
-      - run:
-          name: run black
-          command: |
-            . ~/workspace/venv/bin/activate
-            black --check .
-
   run_tests:
     executor: python_with_services
     steps:
@@ -294,9 +284,6 @@ workflows:
       - audit_pip_deps:
           requires:
             - install_requirements
-      - check_code_style:
-          requires:
-            - install_requirements
       - run_django_system_checks:
           requires:
             - install_requirements
@@ -310,7 +297,6 @@ workflows:
           requires:
             - install_requirements
             - audit_pip_deps
-            - check_code_style
             - run_django_system_checks
             - run_tests
             - audit_security_of_code
