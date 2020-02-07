@@ -4,7 +4,7 @@ x-env-var: &env_var
   environment:
     SECRET_KEY: "$SECRET_KEY"
     DEBUG: "$DEBUG"
-    ADMIN_URL: 'admin/'
+    ADMIN_URL: '$ADMIN_URL'
     ALLOWED_HOSTS: "$ALLOWED_HOSTS"
     CORS_ORIGIN_WHITELIST: "$CORS_ORIGIN_WHITELIST"
     DATABASE_URL: "$DATABASE_URL"

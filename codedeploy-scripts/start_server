@@ -39,7 +39,7 @@ set -x
 . /home/ec2-user/export_envs
 
 cd /opt/codedeploy-agent/deployment-root/${DEPLOYMENT_GROUP_ID}/${DEPLOYMENT_ID}/deployment-archive
-COMPOSE="docker-compose -f docker-compose-staging.yml"
+COMPOSE="docker-compose -p neo-guide -f docker-compose-staging.yml"
 ${COMPOSE} build
 ${COMPOSE} up -d
 # Remove unused data, do not prompt for confirmation

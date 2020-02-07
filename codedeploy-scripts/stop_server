@@ -33,10 +33,11 @@ set -x
 
 # Replace "your_instance_name" with name of your instance
 #INSTANCE_NAME="jira-connector"
+. /home/ec2-user/export_envs
 
 DIR=$(cat /opt/codedeploy-agent/deployment-root/deployment-instructions/${DEPLOYMENT_GROUP_ID}_most_recent_install)
 cd $DIR/deployment-archive
-COMPOSE="docker-compose -f docker-compose-staging.yml"
+COMPOSE="docker-compose -p neo-guide -f docker-compose-staging.yml"
 ${COMPOSE} down | true
 
 # NOTE:
