@@ -14,8 +14,8 @@ argon2-cffi # https://github.com/hynek/argon2_cffi
 boto3  # https://github.com/boto/boto3
 gunicorn
 psycopg2-binary
-rollbar
 celery  # https://github.com/celery/celery
 django-celery-beat  # https://github.com/celery/django-celery-beat
 django-redis
 django-filter
+Pillow
