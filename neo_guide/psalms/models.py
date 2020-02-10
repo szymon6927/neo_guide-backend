@@ -12,7 +12,7 @@ from neo_guide.psalms.validators import page_number_validator
 
 class Psalm(CreatedAtUpdatedAtModel):
     name = models.CharField(_('Tytuł Pieśni'), max_length=200, unique=True)
-    page_number = models.PositiveIntegerField(_('Numer strony'), unique=True, validators=page_number_validator)
+    page_number = models.PositiveIntegerField(_('Numer strony'), validators=page_number_validator)
     card_color = models.CharField(
         _('Kolor kartki'), choices=CardColorChoices.choices, default=CardColorChoices.WHITE.value, max_length=20
     )
