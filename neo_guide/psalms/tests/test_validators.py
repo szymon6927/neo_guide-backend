@@ -20,7 +20,7 @@ def test_validate_image_file_size_when_size_too_large():
 
 
 def test_validate_audio_file_size_when_size_too_large():
-    value = FakeValue(11 * 1024 * 1024)
+    value = FakeValue(51 * 1024 * 1024)
 
     with pytest.raises(ValidationError):
         validate_audio_file_size(value)
