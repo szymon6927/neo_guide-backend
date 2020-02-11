@@ -131,7 +131,7 @@ REST_FRAMEWORK = {
         'rest_framework.filters.OrderingFilter',
         'rest_framework.filters.SearchFilter',
     ),
-    'PAGE_SIZE': 10,
+    'PAGE_SIZE': 350,
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
 }
 
