@@ -13,7 +13,7 @@ class FakeValue:
 
 
 def test_validate_image_file_size_when_size_too_large():
-    value = FakeValue(4 * 1024 * 1024)
+    value = FakeValue(6 * 1024 * 1024)
 
     with pytest.raises(ValidationError):
         validate_image_file_size(value)
