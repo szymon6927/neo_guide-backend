@@ -19,11 +19,11 @@ class PsalmViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = (
         Psalm.objects.prefetch_related(
             Prefetch('psalm_audio', queryset=PsalmAudio.objects.filter(active=True)),
-            Prefetch('psalm_image', queryset=PsalmImage.objects.filter(active=True)),
+            Prefetch('psalm_image', queryset=PsalmImage.objects.filter(active=True, default=False)),
         )
         .annotate(
             default_image=Subquery(
-                PsalmImage.objects.filter(active=True, default=True, psalm=OuterRef('id')).values('image')
+                PsalmImage.objects.filter(active=True, default=True, psalm=OuterRef('id')).values('image')[:1]
             )
         )
         .filter(active=True)
