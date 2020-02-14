@@ -28,17 +28,33 @@ class PsalmAudioInline(admin.TabularInline):
 
 @admin.register(Psalm)
 class PsalmAdmin(admin.ModelAdmin):
-    list_display = ('name', 'page_number', 'card_color', 'is_valid', 'active', 'created_at', 'updated_at')
+    list_display = (
+        'name',
+        'page_number',
+        'card_color',
+        'image_number',
+        'audio_number',
+        'is_valid',
+        'active',
+        'created_at',
+        'updated_at',
+    )
     search_fields = ('name', 'page_number')
     list_filter = ('card_color', 'active')
     inlines = [PsalmImageInline, PsalmAudioInline]
 
     def is_valid(self, obj):
-        default_images_number = obj.psalm_image.filter(default=True).count()
+        default_image = obj.psalm_image.filter(default=True)
 
-        if default_images_number > 1:
+        if default_image.count() > 1 or not default_image:
             return False
 
         return True
+
+    def image_number(self, obj):
+        return obj.psalm_image.filter(active=True).count()
+
+    def audio_number(self, obj):
+        return obj.psalm_audio.filter(active=True).count()
 
     is_valid.boolean = True
