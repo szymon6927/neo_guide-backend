@@ -1,8 +1,12 @@
 from django.db import models
 from django.utils.translation import gettext as _
+from multiselectfield import MultiSelectField
 
 from neo_guide.core.models import CreatedAtUpdatedAtModel
 from neo_guide.psalms.choices import CardColorChoices
+from neo_guide.psalms.choices import LiturgicalPeriodChoices
+from neo_guide.psalms.choices import NeoStageChoices
+from neo_guide.psalms.choices import PsalmTypeChoices
 from neo_guide.psalms.utils import psalm_audio_directory_path
 from neo_guide.psalms.utils import psalm_image_directory_path
 from neo_guide.psalms.validators import audio_validator
@@ -16,6 +20,16 @@ class Psalm(CreatedAtUpdatedAtModel):
     card_color = models.CharField(
         _('Kolor kartki'), choices=CardColorChoices.choices, default=CardColorChoices.WHITE.value, max_length=20
     )
+    type = MultiSelectField(_('Rodzaj'), choices=PsalmTypeChoices.choices, null=True, blank=True)
+    liturgical_period = MultiSelectField(
+        _('Okres liturgiczny'),
+        choices=LiturgicalPeriodChoices.choices,
+        default=LiturgicalPeriodChoices.NORMAL_PERIOD.value,
+        null=True,
+        blank=True,
+    )
+    neo_stage = MultiSelectField(_('Etap'), choices=NeoStageChoices.choices, null=True, blank=True)
+    comment = models.TextField(_('Komentarz'), null=True, blank=True)
     active = models.BooleanField(default=True)
 
     class Meta:
