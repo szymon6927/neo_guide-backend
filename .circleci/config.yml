@@ -149,14 +149,14 @@ workflows:
       - audit_security_of_code:
           requires:
             - install_requirements
-      - push_and_deploy_to_staging:
-          requires:
-            - install_requirements
-            - audit_pip_deps
-            - run_django_system_checks
-            - run_tests
-            - audit_security_of_code
-          filters:
-            branches:
-              only:
-                - master
+#      - push_and_deploy_to_staging:
+#          requires:
+#            - install_requirements
+#            - audit_pip_deps
+#            - run_django_system_checks
+#            - run_tests
+#            - audit_security_of_code
+#          filters:
+#            branches:
+#              only:
+#                - master
