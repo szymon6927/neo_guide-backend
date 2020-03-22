@@ -45,20 +45,20 @@ services:
     environment:
       API_URL: "http://0.0.0.0:8000/swagger.json"
 
-  redis:
-    container_name: neo_guide-redis
-    image: redis:alpine
-    volumes:
-      - redis_volume:/var/lib/redis
-    ports:
-      - 6379:6379
+#  redis:
+#    container_name: neo_guide-redis
+#    image: redis:alpine
+#    volumes:
+#      - redis_volume:/var/lib/redis
+#    ports:
+#      - 6379:6379
 
-  celery_worker:
-    <<: *base
-    container_name: neo_guide-celery-worker
-    command: celery worker -A config.celery -l info
+#  celery_worker:
+#    <<: *base
+#    container_name: neo_guide-celery-worker
+#    command: celery worker -A config.celery -l info
 
-  celery_beat:
-    <<: *base
-    container_name: neo_guide-celery-beat
-    command: celery beat -A config.celery -l info
+#  celery_beat:
+#    <<: *base
+#    container_name: neo_guide-celery-beat
+#    command: celery beat -A config.celery -l info
