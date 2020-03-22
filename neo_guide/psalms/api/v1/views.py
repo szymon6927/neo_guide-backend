@@ -4,6 +4,7 @@ from django.db.models import Subquery
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
+from neo_guide.psalms.api.v1.filters import PsalmsFilter
 from neo_guide.psalms.api.v1.serializers import PsalmSerializer
 from neo_guide.psalms.models import Psalm
 from neo_guide.psalms.models import PsalmAudio
@@ -12,7 +13,7 @@ from neo_guide.psalms.models import PsalmImage
 
 class PsalmViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
-    filterset_fields = ('card_color',)
+    filterset_class = PsalmsFilter
     search_fields = ('name', 'page_number')
     ordering_fields = ('name', 'page_number')
     serializer_class = PsalmSerializer
