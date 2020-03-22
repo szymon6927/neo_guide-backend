@@ -32,4 +32,16 @@ class PsalmSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Psalm
-        fields = ('id', 'name', 'page_number', 'card_color', 'recordings', 'images', 'default_image')
+        fields = (
+            'id',
+            'name',
+            'page_number',
+            'card_color',
+            'type',
+            'liturgical_period',
+            'neo_stage',
+            'comment',
+            'recordings',
+            'images',
+            'default_image',
+        )
