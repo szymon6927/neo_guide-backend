@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'storages',
     'django_filters',
+    'multiselectfield',
     'neo_guide.users',
     'neo_guide.core',
     'neo_guide.psalms',
