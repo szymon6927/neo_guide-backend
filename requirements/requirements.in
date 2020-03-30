@@ -20,3 +20,4 @@ django-redis
 django-filter
 Pillow
 django-multiselectfield
+djangorestframework-simplejwt
