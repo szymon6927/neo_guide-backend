@@ -18,7 +18,10 @@ schema_view = get_schema_view(
 )
 
 # api routers
-api_urlpatterns = [path('api/', include('neo_guide.psalms.api.urls'))]
+api_urlpatterns = [
+    path('api/', include('neo_guide.psalms.api.urls')),
+    path('api/', include('neo_guide.users.api.urls')),
+]
 
 
 # Django Admin
