@@ -3,8 +3,8 @@ from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
-from neo_guide.users.api.v1.permissions import IsAdminUser
-from neo_guide.users.api.v1.permissions import IsLoggedInUserOrAdmin
+from neo_guide.core.api.v1.permissions import IsAdminUser
+from neo_guide.core.api.v1.permissions import IsLoggedInUserOrAdmin
 from neo_guide.users.api.v1.serializers import UserSerializer
 from neo_guide.users.models import User
 
