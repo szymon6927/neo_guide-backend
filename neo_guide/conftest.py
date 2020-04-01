@@ -7,13 +7,27 @@ from neo_guide.psalms.choices import LiturgicalPeriodChoices
 from neo_guide.psalms.choices import NeoStageChoices
 from neo_guide.psalms.choices import PsalmTypeChoices
 from neo_guide.psalms.tests.factories import PsalmFactory
+from neo_guide.users.tests.factories import UserFactory
 
 
 @pytest.fixture()
 def api_client():
     """A Django REST Framework api tests client instance."""
     skip_if_no_django()
+
     return APIClient()
+
+
+@pytest.fixture
+def api_client_with_token():
+    """A Django REST Framework test client instance with headers required by v1 API and already obtained token."""
+    skip_if_no_django()
+    user = UserFactory()
+    api_client = APIClient()
+    api_client.force_authenticate(user)
+    api_client.user = user
+
+    return api_client
 
 
 @pytest.fixture()

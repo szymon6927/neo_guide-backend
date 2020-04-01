@@ -21,12 +21,13 @@ class UserSerializer(serializers.ModelSerializer):
             user = User(**validated_data)
             user.set_password(password)
             user.is_active = False
+            user.save()
 
             return user
 
     def validate(self, data):
         password = data.get('password')
-        confirm_password = data.pop('confirm_password')
+        confirm_password = data.get('confirm_password')
 
         if not password or not confirm_password:
             raise serializers.ValidationError(_('Podaj hasło i potwierdź je.'))
