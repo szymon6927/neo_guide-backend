@@ -2,7 +2,7 @@ from django.db.models import OuterRef
 from django.db.models import Prefetch
 from django.db.models import Subquery
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticated
 
 from neo_guide.psalms.api.v1.filters import PsalmsFilter
 from neo_guide.psalms.api.v1.serializers import PsalmSerializer
@@ -12,7 +12,7 @@ from neo_guide.psalms.models import PsalmImage
 
 
 class PsalmViewSet(viewsets.ReadOnlyModelViewSet):
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticated]
     filterset_class = PsalmsFilter
     search_fields = ('name', 'page_number')
     ordering_fields = ('name', 'page_number')

@@ -1,6 +1,6 @@
 # Django
 # ------------------------------------------------------------------------------
-django>=3.0.3  # https://www.djangoproject.com/
+django>=3.0.5  # https://www.djangoproject.com/
 django-environ  # https://github.com/joke2k/django-environ
 djangorestframework  # https://github.com/encode/django-rest-framework
 django-storages  # https://github.com/jschneier/django-storages
@@ -20,3 +20,4 @@ django-redis
 django-filter
 Pillow
 django-multiselectfield
+djangorestframework-simplejwt
