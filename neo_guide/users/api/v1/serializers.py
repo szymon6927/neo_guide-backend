@@ -6,12 +6,17 @@ from neo_guide.users.models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
-    confirm_password = serializers.CharField(write_only=True)
-
     class Meta:
         model = User
-        fields = ('email', 'password', 'confirm_password', 'first_name', 'last_name', 'city', 'parish', 'community')
-        extra_kwargs = {'password': {'write_only': True}}
+        fields = ('id', 'email', 'first_name', 'last_name', 'city', 'parish', 'community')
+
+
+class CreateUserSerializer(UserSerializer):
+    confirm_password = serializers.CharField(write_only=True)
+
+    class Meta(UserSerializer.Meta):
+        fields = UserSerializer.Meta.fields + ('password', 'confirm_password')
+        extra_kwargs = {'password': {'write_only': True}, 'confirm_password': {'write_only': True}}
 
     def create(self, validated_data):
         password = validated_data.pop('password')
