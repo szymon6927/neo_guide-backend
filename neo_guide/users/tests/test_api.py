@@ -40,7 +40,7 @@ class TestUserDetailsView:
 
         response = api_client.get(reverse('v1-users:user-detail', args=(user.id,)))
 
-        assert response.status_code == status.HTTP_403_FORBIDDEN
+        assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
     def test_get_user_details_not_found(self, api_client):
         api_client.force_authenticate(UserFactory.create_admin())

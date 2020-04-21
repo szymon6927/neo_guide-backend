@@ -46,7 +46,7 @@ class TestPsalmListView:
     def test_get_psalms_when_not_logged_in(self, api_client):
         response = api_client.get(reverse('v1-psalms:psalm-list'))
 
-        assert response.status_code == status.HTTP_403_FORBIDDEN
+        assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
 
 @pytest.mark.django_db
@@ -478,4 +478,4 @@ class TestPsalmDetailsView:
 
         response = api_client.get(reverse('v1-psalms:psalm-detail', args=(psalm.id,)))
 
-        assert response.status_code == status.HTTP_403_FORBIDDEN
+        assert response.status_code == status.HTTP_401_UNAUTHORIZED
