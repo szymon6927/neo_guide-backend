@@ -53,6 +53,7 @@ def create_psalms_with_all_psalm_type_choices():
 @pytest.fixture()
 def create_psalms_with_all_liturgical_period_choices():
     PsalmFactory.create_batch(5, liturgical_period=LiturgicalPeriodChoices.ADVENT.value)
+    PsalmFactory.create_batch(5, liturgical_period=LiturgicalPeriodChoices.CHRISTMAS.value)
     PsalmFactory.create_batch(5, liturgical_period=LiturgicalPeriodChoices.LENT.value)
     PsalmFactory.create_batch(5, liturgical_period=LiturgicalPeriodChoices.EASTER.value)
     PsalmFactory.create_batch(5, liturgical_period=LiturgicalPeriodChoices.NORMAL_PERIOD.value)

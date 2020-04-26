@@ -21,7 +21,8 @@ class PsalmTypeChoices(TextChoices):
 
 
 class LiturgicalPeriodChoices(TextChoices):
-    ADVENT = 'advent', _('Śpiew na Adwent + Boże Narodzenie')
+    ADVENT = 'advent', _('Śpiew na Adwent')
+    CHRISTMAS = 'christmas', _('Śpiew na Boże Narodzenie')
     LENT = 'lent', _('Śpiew na Wielki Post')
     EASTER = 'easter', _('Śpiew na Wielkanoc')
     NORMAL_PERIOD = 'normal_period', _('Śpiew okres zwykyły')
