@@ -210,6 +210,7 @@ class TestPsalmListViewLiturgicalPeriodFilter:
     @pytest.mark.parametrize(
         "liturgical_period, different_liturgical_period, psalms_number",
         [
+            (LiturgicalPeriodChoices.CHRISTMAS.value, LiturgicalPeriodChoices.ADVENT.value, 5),
             (LiturgicalPeriodChoices.ADVENT.value, LiturgicalPeriodChoices.LENT.value, 5),
             (LiturgicalPeriodChoices.EASTER.value, LiturgicalPeriodChoices.NORMAL_PERIOD.value, 5),
         ],
@@ -236,6 +237,7 @@ class TestPsalmListViewLiturgicalPeriodFilter:
     @pytest.mark.parametrize(
         "liturgical_periods, expected_result_number",
         [
+            (f'{LiturgicalPeriodChoices.ADVENT.value},{LiturgicalPeriodChoices.CHRISTMAS.value}', 10),
             (f'{LiturgicalPeriodChoices.ADVENT.value},{LiturgicalPeriodChoices.LENT.value}', 10),
             (f'{LiturgicalPeriodChoices.EASTER.value},{LiturgicalPeriodChoices.NORMAL_PERIOD.value}', 10),
             (
@@ -247,7 +249,7 @@ class TestPsalmListViewLiturgicalPeriodFilter:
     def test_liturgical_period_filter_multiple_types(
         self, api_client_with_token, liturgical_periods, expected_result_number
     ):
-        assert Psalm.objects.all().count() == 20
+        assert Psalm.objects.all().count() == 25
 
         response = api_client_with_token.get(reverse('v1-psalms:psalm-list'), {'liturgical_period': liturgical_periods})
 
@@ -262,11 +264,11 @@ class TestPsalmListViewLiturgicalPeriodFilter:
             f'{LiturgicalPeriodChoices.ADVENT.value},test',
             f'test,{LiturgicalPeriodChoices.LENT.value}',
             f'{LiturgicalPeriodChoices.EASTER.value},test,{LiturgicalPeriodChoices.NORMAL_PERIOD.value}',
-            f'{LiturgicalPeriodChoices.ADVENT.value},test,test',
+            f'{LiturgicalPeriodChoices.CHRISTMAS.value},test,test',
         ],
     )
     def test_liturgical_period_filter_multiple_colors_with_wrong_color(self, api_client_with_token, liturgical_periods):
-        assert Psalm.objects.all().count() == 20
+        assert Psalm.objects.all().count() == 25
 
         response = api_client_with_token.get(reverse('v1-psalms:psalm-list'), {'liturgical_period': liturgical_periods})
 

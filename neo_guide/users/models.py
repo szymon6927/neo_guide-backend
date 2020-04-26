@@ -4,7 +4,7 @@ from django.utils.translation import gettext as _
 
 
 class User(AbstractUser):
-    username = models.CharField(max_length=150, unique=False)
+    username = models.CharField(max_length=150, unique=False, blank=True)
     email = models.EmailField(_('Adres e-mail'), unique=True)
     first_name = models.CharField(_('Imię'), max_length=100, blank=True)
     last_name = models.CharField(_('Nazwisko'), max_length=100, blank=True)
