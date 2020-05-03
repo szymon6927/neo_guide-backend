@@ -29,6 +29,7 @@ class LiturgicalPeriodChoices(TextChoices):
 
 
 class NeoStageChoices(TextChoices):
+    PRE_CATECHUMENATE = 'pre_catechumenate', _('Śpiew Prekatechumenat')
     FIRST_SCRUTINIUM = 'first_scrutinium', _('Śpiew etapu "I Scrutinium"')
     SHEMA = 'shema', _('Śpiew etapu "Shema"')
     SECOND_SCRUTINIUM = 'second_scrutinium', _('Śpiew etapu "II Scrutinium"')

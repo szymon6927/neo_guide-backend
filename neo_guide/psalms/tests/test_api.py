@@ -281,6 +281,7 @@ class TestPsalmListViewNeoStageFilter:
     @pytest.mark.parametrize(
         "neo_stage, different_neo_stage, psalms_number",
         [
+            (NeoStageChoices.PRE_CATECHUMENATE.value, NeoStageChoices.FIRST_SCRUTINIUM, 5),
             (NeoStageChoices.FIRST_SCRUTINIUM.value, NeoStageChoices.SHEMA.value, 5),
             (NeoStageChoices.SECOND_SCRUTINIUM.value, NeoStageChoices.INTRODUCTION_TO_PRAYER.value, 5),
             (NeoStageChoices.TRADITIO.value, NeoStageChoices.REDITIO.value, 5),
@@ -308,6 +309,7 @@ class TestPsalmListViewNeoStageFilter:
     @pytest.mark.parametrize(
         "neo_stages, expected_result_number",
         [
+            (f'{NeoStageChoices.PRE_CATECHUMENATE.value}, {NeoStageChoices.SECOND_SCRUTINIUM.value}', 10),
             (f'{NeoStageChoices.FIRST_SCRUTINIUM.value}, {NeoStageChoices.SHEMA.value}', 10),
             (f'{NeoStageChoices.SECOND_SCRUTINIUM.value}, {NeoStageChoices.INTRODUCTION_TO_PRAYER.value}', 10),
             (f'{NeoStageChoices.TRADITIO.value}, {NeoStageChoices.REDITIO.value}', 10),
@@ -319,7 +321,7 @@ class TestPsalmListViewNeoStageFilter:
         ],
     )
     def test_neo_stage_filter_multiple_types(self, api_client_with_token, neo_stages, expected_result_number):
-        assert Psalm.objects.all().count() == 45
+        assert Psalm.objects.all().count() == 50
 
         response = api_client_with_token.get(reverse('v1-psalms:psalm-list'), {'neo_stage': neo_stages})
 
@@ -337,8 +339,8 @@ class TestPsalmListViewNeoStageFilter:
             f'{NeoStageChoices.TRADITIO.value},test,test',
         ],
     )
-    def test_neo_stage_filter_multiple_colors_with_wrong_color(self, api_client_with_token, neo_stages):
-        assert Psalm.objects.all().count() == 45
+    def test_neo_stage_filter_with_wrong_stage(self, api_client_with_token, neo_stages):
+        assert Psalm.objects.all().count() == 50
 
         response = api_client_with_token.get(reverse('v1-psalms:psalm-list'), {'neo_stage': neo_stages})
 

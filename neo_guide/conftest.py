@@ -61,6 +61,7 @@ def create_psalms_with_all_liturgical_period_choices():
 
 @pytest.fixture()
 def create_psalms_with_all_neo_stage_choices():
+    PsalmFactory.create_batch(5, neo_stage=NeoStageChoices.PRE_CATECHUMENATE.value)
     PsalmFactory.create_batch(5, neo_stage=NeoStageChoices.FIRST_SCRUTINIUM.value)
     PsalmFactory.create_batch(5, neo_stage=NeoStageChoices.SHEMA.value)
     PsalmFactory.create_batch(5, neo_stage=NeoStageChoices.SECOND_SCRUTINIUM.value)
