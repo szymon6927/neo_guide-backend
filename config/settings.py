@@ -126,6 +126,7 @@ if not CORS_ORIGIN_ALLOW_ALL:
 
 # Django Rest Framework
 REST_FRAMEWORK = {
+    'EXCEPTION_HANDLER': 'neo_guide.core.api.v1.handlers.exception_errors_format_handler',
     'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.IsAuthenticated'],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'DEFAULT_FILTER_BACKENDS': (

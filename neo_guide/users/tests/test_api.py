@@ -63,6 +63,21 @@ class TestUserDetailsView:
         assert response.data['parish'] == user.parish
         assert response.data['community'] == user.community
 
+    def test_user_change_password(self, api_client_with_token):
+        user = api_client_with_token.user
+        user.set_password('oldPasssword123')
+
+        data = {
+            'current_password': 'oldPasssword123',
+            'new_password': 'test123test123',
+            'confirm_new_password': 'test123test123',
+        }
+
+        response = api_client_with_token.post(reverse('v1-users:user-change-password'), data=data)
+
+        assert response.status_code == 200
+        assert user.check_password('test123test123')
+
 
 @pytest.mark.django_db
 class TestUserCreateView:

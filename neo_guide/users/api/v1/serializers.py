@@ -35,9 +35,28 @@ class CreateUserSerializer(UserSerializer):
         confirm_password = data.get('confirm_password')
 
         if not password or not confirm_password:
-            raise serializers.ValidationError(_('Podaj hasło i potwierdź je.'))
+            raise serializers.ValidationError(_('Enter the password and confirm it.'))
 
         if password != confirm_password:
-            raise serializers.ValidationError(_('Hasła się nie zgadzają'))
+            raise serializers.ValidationError(_('Passwords do not match!'))
+
+        return data
+
+
+class ChangePasswordSerializer(serializers.Serializer):
+    current_password = serializers.CharField(required=True, allow_blank=False)
+    new_password = serializers.CharField(required=True, allow_blank=False)
+    confirm_new_password = serializers.CharField(required=True, allow_blank=False)
+
+    def validate(self, data):
+        current_password = data.get('current_password')
+        new_password = data.get('new_password')
+        confirm_new_password = data.get('confirm_new_password')
+
+        if current_password == new_password or current_password == confirm_new_password:
+            raise serializers.ValidationError(_('Passwords cannot be the same!'))
+
+        if new_password != confirm_new_password:
+            raise serializers.ValidationError(_('Passwords do not match!'))
 
         return data

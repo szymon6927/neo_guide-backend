@@ -77,7 +77,8 @@ class TestPsalmListViewCardColorFilter:
         response = api_client_with_token.get(reverse('v1-psalms:psalm-list'), {'card_color': 'test'})
 
         assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'card_color' in response.data
+        assert 'errors' in response.data
+        assert response.data['errors'][0]['field'] == 'card_color'
 
     @pytest.mark.usefixtures("create_psalms_with_all_card_color_choices")
     @pytest.mark.parametrize(
@@ -129,7 +130,8 @@ class TestPsalmListViewCardColorFilter:
         response = api_client_with_token.get(reverse('v1-psalms:psalm-list'), {'card_color': card_colors})
 
         assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'card_color' in response.data
+        assert 'errors' in response.data
+        assert response.data['errors'][0]['field'] == 'card_color'
 
 
 @pytest.mark.django_db
@@ -159,7 +161,8 @@ class TestPsalmListViewPsalmTypeFilter:
         response = api_client_with_token.get(reverse('v1-psalms:psalm-list'), {'type': 'test'})
 
         assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'type' in response.data
+        assert 'errors' in response.data
+        assert response.data['errors'][0]['field'] == 'type'
 
     @pytest.mark.usefixtures("create_psalms_with_all_psalm_type_choices")
     @pytest.mark.parametrize(
@@ -202,7 +205,8 @@ class TestPsalmListViewPsalmTypeFilter:
         response = api_client_with_token.get(reverse('v1-psalms:psalm-list'), {'type': psalm_types})
 
         assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'type' in response.data
+        assert 'errors' in response.data
+        assert response.data['errors'][0]['field'] == 'type'
 
 
 @pytest.mark.django_db
@@ -231,7 +235,8 @@ class TestPsalmListViewLiturgicalPeriodFilter:
         response = api_client_with_token.get(reverse('v1-psalms:psalm-list'), {'liturgical_period': 'test'})
 
         assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'liturgical_period' in response.data
+        assert 'errors' in response.data
+        assert response.data['errors'][0]['field'] == 'liturgical_period'
 
     @pytest.mark.usefixtures("create_psalms_with_all_liturgical_period_choices")
     @pytest.mark.parametrize(
@@ -273,7 +278,8 @@ class TestPsalmListViewLiturgicalPeriodFilter:
         response = api_client_with_token.get(reverse('v1-psalms:psalm-list'), {'liturgical_period': liturgical_periods})
 
         assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'liturgical_period' in response.data
+        assert 'errors' in response.data
+        assert response.data['errors'][0]['field'] == 'liturgical_period'
 
 
 @pytest.mark.django_db
@@ -303,7 +309,8 @@ class TestPsalmListViewNeoStageFilter:
         response = api_client_with_token.get(reverse('v1-psalms:psalm-list'), {'neo_stage': 'test'})
 
         assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'neo_stage' in response.data
+        assert 'errors' in response.data
+        assert response.data['errors'][0]['field'] == 'neo_stage'
 
     @pytest.mark.usefixtures("create_psalms_with_all_neo_stage_choices")
     @pytest.mark.parametrize(
@@ -345,7 +352,8 @@ class TestPsalmListViewNeoStageFilter:
         response = api_client_with_token.get(reverse('v1-psalms:psalm-list'), {'neo_stage': neo_stages})
 
         assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert 'neo_stage' in response.data
+        assert 'errors' in response.data
+        assert response.data['errors'][0]['field'] == 'neo_stage'
 
 
 @pytest.mark.django_db
