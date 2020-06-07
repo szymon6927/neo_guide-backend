@@ -14,3 +14,4 @@ pytest-django
 pytest-faker
 pytest-mock
 safety
+locust
