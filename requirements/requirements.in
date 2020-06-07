@@ -1,6 +1,6 @@
 # Django
 # ------------------------------------------------------------------------------
-django>=3.0.5  # https://www.djangoproject.com/
+django>=3.0.7  # https://www.djangoproject.com/
 django-environ  # https://github.com/joke2k/django-environ
 djangorestframework  # https://github.com/encode/django-rest-framework
 django-storages  # https://github.com/jschneier/django-storages
@@ -14,9 +14,9 @@ argon2-cffi # https://github.com/hynek/argon2_cffi
 boto3  # https://github.com/boto/boto3
 gunicorn
 psycopg2-binary
-celery  # https://github.com/celery/celery
-django-celery-beat  # https://github.com/celery/django-celery-beat
-django-redis
+# celery  # https://github.com/celery/celery
+# django-celery-beat  # https://github.com/celery/django-celery-beat
+# django-redis
 django-filter
 Pillow
 django-multiselectfield
