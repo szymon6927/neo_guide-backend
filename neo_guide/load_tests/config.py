@@ -1,0 +1,5 @@
+import os
+
+LOCUST_USER_EMAIL = os.environ['LOCUST_USER_EMAIL']
+LOCUST_USER_PASSWORD = os.environ['LOCUST_USER_PASSWORD']
+LOCUST_HOST = os.environ['LOCUST_HOST']
