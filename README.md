@@ -38,3 +38,22 @@ To run tests run:
 ```
 pytest neo_guide
 ```
+
+### Load testing
+The `/neo_guide/load_tests` directory contains a definitions of load tests.
+It's required to declared a few envs for correctly tests execution:
+```bash
+LOCUST_USER_EMAIL=
+LOCUST_USER_PASSWORD=
+LOCUST_HOST=  # eg. http://127.0.0.1:8000/
+```
+
+Then in project root type:
+```
+$ locust -f neo_guide/load_tests/locustfile.py
+```
+
+then open a locust web UI:
+```
+http://localhost:8089/
+```
