@@ -15,4 +15,3 @@ pytest-faker
 pytest-mock
 safety
 locust
-gs
